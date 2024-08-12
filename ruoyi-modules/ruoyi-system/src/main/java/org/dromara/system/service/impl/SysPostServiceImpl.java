@@ -1,6 +1,7 @@
 package org.dromara.system.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -8,7 +9,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.constant.UserConstants;
 import org.dromara.common.core.exception.ServiceException;
+import org.dromara.common.core.service.PostService;
 import org.dromara.common.core.utils.MapstructUtils;
+import org.dromara.common.core.utils.SpringUtils;
 import org.dromara.common.core.utils.StreamUtils;
 import org.dromara.common.core.utils.StringUtils;
 import org.dromara.common.mybatis.core.page.PageQuery;
@@ -18,6 +21,7 @@ import org.dromara.system.domain.SysDept;
 import org.dromara.system.domain.SysPost;
 import org.dromara.system.domain.SysUserPost;
 import org.dromara.system.domain.bo.SysPostBo;
+import org.dromara.system.domain.vo.SysDeptVo;
 import org.dromara.system.domain.vo.SysPostVo;
 import org.dromara.system.mapper.SysDeptMapper;
 import org.dromara.system.mapper.SysPostMapper;
@@ -25,6 +29,7 @@ import org.dromara.system.mapper.SysUserPostMapper;
 import org.dromara.system.service.ISysPostService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,7 +41,7 @@ import java.util.stream.Collectors;
  */
 @RequiredArgsConstructor
 @Service
-public class SysPostServiceImpl implements ISysPostService {
+public class SysPostServiceImpl implements ISysPostService, PostService {
 
     private final SysPostMapper baseMapper;
     private final SysDeptMapper deptMapper;
@@ -227,5 +232,17 @@ public class SysPostServiceImpl implements ISysPostService {
     public int updatePost(SysPostBo bo) {
         SysPost post = MapstructUtils.convert(bo, SysPost.class);
         return baseMapper.updateById(post);
+    }
+
+    @Override
+    public String selectPostNameByIds(String postIds) {
+        List<String> list = new ArrayList<>();
+        for (Long id : StringUtils.splitTo(postIds, Convert::toLong)) {
+            SysPostVo vo = SpringUtils.getAopProxy(this).selectPostById(id);
+            if (ObjectUtil.isNotNull(vo)) {
+                list.add(vo.getPostName());
+            }
+        }
+        return String.join(StringUtils.SEPARATOR, list);
     }
 }

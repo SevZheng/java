@@ -23,6 +23,11 @@ public interface TransConstant {
     String DEPT_ID_TO_NAME = "dept_id_to_name";
 
     /**
+     * 岗位id转名称
+     */
+    String POST_ID_TO_NAME = "post_id_to_name";
+
+    /**
      * 字典type转label
      */
     String DICT_TYPE_TO_LABEL = "dict_type_to_label";
