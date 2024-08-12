@@ -58,4 +58,21 @@ public class SysPost extends TenantEntity {
      */
     private String remark;
 
+    /**
+     * 工作年限
+     */
+    private String duration;
+    /**
+     * 是否发布
+     */
+    private String published;
+    /**
+     * 英语等级
+     */
+    private String englishLevel;
+    /**
+     * 工作地点
+     */
+    private String location;
+
 }
