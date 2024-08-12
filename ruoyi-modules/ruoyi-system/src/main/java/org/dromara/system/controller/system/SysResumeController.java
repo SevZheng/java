@@ -1,12 +1,9 @@
 package org.dromara.system.controller.system;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import org.dromara.common.core.domain.R;
-import org.dromara.common.json.utils.JsonUtils;
 import org.dromara.common.log.annotation.Log;
 import org.dromara.common.log.enums.BusinessType;
 import org.dromara.common.mybatis.core.page.PageQuery;
@@ -68,7 +65,7 @@ public class SysResumeController extends BaseController {
     }
 
     /**
-     * 修改岗位
+     * 修改简历
      */
     @SaCheckPermission("system:resume:edit")
     @Log(title = "简历管理", businessType = BusinessType.UPDATE)
@@ -78,12 +75,12 @@ public class SysResumeController extends BaseController {
     }
 
     /**
-     * 删除岗位
+     * 删除简历
      *
-     * @param resumeIds 岗位ID串
+     * @param resumeIds 简历ID串
      */
     @SaCheckPermission("system:resume:remove")
-    @Log(title = "岗位管理", businessType = BusinessType.DELETE)
+    @Log(title = "简历管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{resumeIds}")
     public R<Void> remove(@PathVariable Long[] resumeIds) {
         return toAjax(resumeService.deleteResumeByIds(resumeIds));
