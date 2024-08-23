@@ -77,6 +77,7 @@ public class SysResumeServiceImpl implements ISysResumeService {
             .like(StringUtils.isNotBlank(bo.getEnglishLevel()), SysResume::getEnglishLevel, bo.getEnglishLevel())
             .eq(StringUtils.isNotBlank(bo.getStatus()), SysResume::getStatus, bo.getStatus())
             .eq(ObjectUtil.isNotNull(bo.getPostId()), SysResume::getPostId, bo.getPostId())
+            .eq(ObjectUtil.isNotNull(bo.getDeliver()), SysResume::getDeliver, bo.getDeliver())
             .orderByAsc(SysResume::getCreateTime);
         return wrapper;
     }

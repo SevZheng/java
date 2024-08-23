@@ -51,6 +51,11 @@ public class SysResumeVo implements Serializable {
     private String status;
 
     /**
+     * 简历状态（0未投递 1已投递）
+     */
+    private Integer deliver;
+
+    /**
      * 姓名
      */
     private String name;
